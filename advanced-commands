@@ -1,4 +1,4 @@
-             ( Find Command)
+             ( Find Command )
 
 find . -maxdepth 1 -user root -exec ls -ld {} +    ( use for search files owned by root or specific user )
 sudo find /var/www -type f -user clzadmin -print   ( # find all files in /var/www owned by user 'clzadmin' ) 
@@ -7,7 +7,7 @@ find . -type f -perm 0777 -print                   ( Find files with 777 permiss
 find . -type f -perm 777 -print                    ( Find files without 777 permissions )
 
 
-             ( Grep Command )
+              ( Grep Command )
 
 ifconfig | grep -A 4 inet
 ifconfig | grep -B  Up                  ( Display the Number of Lines Before or After the Search String )
@@ -17,3 +17,30 @@ ifconfig | grep -c inet6                 ( Count the Number of Matches )
 grep -n "main" setup.py                  ( Search Files by Given String in Linux )
 grep -r “function” *                     ( Search a string Recursively in all Directories )
 zgrep -i error /var/log/syslog.2.gz      ( Search a string in Gzipped Files )
+
+
+              ( Top Command )
+
+top -u clzadmin                        ( Display Linux Processes By Specific User )
+Press z                                ( Highlight Running Process in Top )
+Press c                                ( List Absolute Path of Running Linux Processes )
+Press k                                ( Kill Running Linux Process Using Top Command )
+Press shift+P                          ( Sort Linux Processes by CPU Utilisation )
+top -n 1 -b > top-output.txt           ( Save Top Command Results in File )
+Press i                                ( List Linux Idle Processes )
+
+              ( Tar Command )
+
+tar -cvf tecmint-17-11-2023.tar /home/tecmint/                ( Creating a Tar Archive File )
+tar cvzf MyImages-17-11-2023.tar.gz /home/tecmint/MyImages    ( Creating a Tar Archive with Compression )
+tar cvfj Phpfiles-org.tar.bz2 /home/tecmint/php                ( The bz2 feature compresses and creates an archive file that is smaller in size compared to gzip)
+tar -xvf MyImages-17-11-2023.tar.gz                            ( Extracting a Compressed tar.gz Archive )
+tar -tvf tecmint-17-11-2023.tar                                ( Listing Contents of tar Archive )
+tar -xvf Phpfiles-org.tar.bz2 home/tecmint/php/wp-cron.php      (  Extracting a Single File from an Archive )
+tar -xvf tecmint-17-11-2023.tar "file1" "file2" 
+tar -zxvf MyImages-17-11-2023.tar.gz "file1" "file2"           ( Extracting Multiple Files from an Archive )
+tar -jxvf Phpfiles-org.tar.bz2 "file1" "file2"
+tar -xvf Phpfiles-org.tar --wildcards '*.php'
+tar -zxvf Phpfiles-org.tar.gz --wildcards '*.php'              ( Extract a Group of Files Using Wildcard in Linux )
+tar -jxvf Phpfiles-org.tar.bz2 --wildcards '*.php'
+tar -rvf MyImages-14-09-12.tar.gz xyz.txt                      ( Appending Files to an Existing Archive )
