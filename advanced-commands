@@ -1,0 +1,7 @@
+             ( find command)
+
+find . -maxdepth 1 -user root -exec ls -ld {} +    ( use for search files owned by root or specific user )
+sudo find /var/www -type f -user clzadmin -print   ( # find all files in /var/www owned by user 'clzadmin' ) 
+find / -name tecmint.txt                           ( Find files using Name in current directory )
+find . -type f -perm 0777 -print                   ( Find files with 777 permissions )
+find . -type f -perm 777 -print                    ( Find files without 777 permissions )
