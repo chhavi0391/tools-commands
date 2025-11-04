@@ -55,7 +55,14 @@ ps                     ( Display all running process in linux )
 ps au                  ( Display all processes in BSD format.)
 ps -fU tecmint         (  To display a user’s processes by real user ID (RUID) or name, use the -U flag.)
 ps -U root -u root     ( Print All Processes Running as Root (Real and Effective ID)) 
+ps -A | grep -i chrome  ( find the PID of the unresponsive process or application.)
 
 
+            ( Du Command )
 
+du -h                   ( How to Find the Directory Size in Human Readable Format)
+du -sh                  ( How to Find Total Size of a Directory in Linux )
+du -ah                  ( Employing the '-a' flag along with '-h' displays the disk usage of all files and folders in a human-readable format.)
+du -ah --exclude="*.txt" /home/tecmint      ( The following command calculates and displays the disk usage of all files and directories, excluding files that match the given pattern.)
+du -ha --time /home/tecmint                 ( How to Find Directory Usage By Modification Time)
 
