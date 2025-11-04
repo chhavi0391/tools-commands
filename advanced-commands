@@ -66,3 +66,11 @@ du -ah                  ( Employing the '-a' flag along with '-h' displays the d
 du -ah --exclude="*.txt" /home/tecmint      ( The following command calculates and displays the disk usage of all files and directories, excluding files that match the given pattern.)
 du -ha --time /home/tecmint                 ( How to Find Directory Usage By Modification Time)
 
+            ( Uniq Command )
+
+uniq linux-distributions.txt        ( Remove Duplicate Lines from a Text File )
+uniq -c linux-distributions.txt     ( Count Duplicated Lines in a Text File )
+uniq -i linux-distributions.txt     ( Remove Duplicates with Case Insensitive )
+uniq -d linux-distributions.txt     ( Print Only Duplicate Lines from a File )
+uniq -u linux-distributions.txt     ( Print Only Unique Lines from a File )
+
