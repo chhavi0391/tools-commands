@@ -1,0 +1,63 @@
+🧭 Step 1: Check current SSH port (default is 22)
+sudo ss -tlnp | grep ssh
+
+
+or
+
+sudo netstat -tlnp | grep ssh
+
+
+You’ll typically see something like:
+
+LISTEN 0 128 0.0.0.0:22 0.0.0.0:* users:(("sshd",pid=1234,fd=3))
+
+⚙️ Step 2: Edit the SSH configuration file
+
+Open the SSH daemon config:
+
+sudo nano /etc/ssh/sshd_config
+
+
+Find this line:
+
+#Port 22
+
+
+Uncomment it and change it to your desired port (e.g., 2222):
+
+Port 2222
+
+
+👉 You can choose any port between 1024–65535 that’s not already in use.
+
+🧱 Step 3: Adjust the firewall (UFW or iptables)
+
+If you’re using UFW, run:
+
+sudo ufw allow 2222/tcp
+sudo ufw delete allow 22/tcp
+sudo ufw reload
+
+
+If you use firewalld:
+
+sudo firewall-cmd --permanent --add-port=2222/tcp
+sudo firewall-cmd --permanent --remove-port=22/tcp
+sudo firewall-cmd --reload
+
+🔁 Step 4: Restart the SSH service
+sudo systemctl restart ssh
+
+
+or (older Ubuntu versions)
+
+sudo service ssh restart
+
+✅ Step 5: Test the new port (before closing your session!)
+
+Open a new terminal (keep the old one open) and test:
+
+ssh -p 2222 username@your_server_ip
+
+
+If that works — great! Now you can safely close the old session.
