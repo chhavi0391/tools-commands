@@ -1,0 +1,158 @@
+🧭 Step 1: Update & Install Dependencies
+
+Run the following commands:
+
+sudo apt update && sudo apt upgrade -y
+sudo apt install apache2 mysql-server php php-mysql libapache2-mod-php php-cli php-curl php-xml php-gd php-mbstring php-zip unzip wget curl -y
+
+
+Enable Apache and MySQL:
+
+sudo systemctl enable apache2
+sudo systemctl enable mysql
+sudo systemctl start apache2
+sudo systemctl start mysql
+
+🗃️ Step 2: Create WordPress Database & User
+
+Open MySQL shell:
+
+sudo mysql
+
+
+Then run:
+
+CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'StrongPassword123!';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+
+
+(Replace StrongPassword123! with a secure password.)
+
+📂 Step 3: Download & Set Up WordPress
+
+Create your custom directory:
+
+sudo mkdir -p /var/ravinder/wp
+cd /var/ravinder/wp
+
+
+Download and extract WordPress:
+
+wget https://wordpress.org/latest.tar.gz
+tar -xvzf latest.tar.gz
+sudo mv wordpress/* .
+sudo rm -rf wordpress latest.tar.gz
+
+
+Set permissions:
+
+sudo chown -R www-data:www-data /var/ravinder/wp
+sudo find /var/ravinder/wp/ -type d -exec chmod 755 {} \;
+sudo find /var/ravinder/wp/ -type f -exec chmod 644 {} \;
+
+⚙️ Step 4: Configure Apache Virtual Host
+
+Create a new Apache config file for your domain (replace yourdomain.com):
+
+sudo nano /etc/apache2/sites-available/yourdomain.com.conf
+
+
+Paste this:
+
+<VirtualHost *:80>
+    ServerName yourdomain.com
+    ServerAlias www.yourdomain.com
+    DocumentRoot /var/ravinder/wp
+
+    <Directory /var/ravinder/wp>
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/yourdomain_error.log
+    CustomLog ${APACHE_LOG_DIR}/yourdomain_access.log combined
+</VirtualHost>
+
+
+Save and enable the site:
+
+sudo a2ensite yourdomain.com.conf
+sudo a2enmod rewrite
+sudo systemctl reload apache2
+
+
+Test config:
+
+sudo apache2ctl configtest
+sudo systemctl restart apache2
+
+🌐 Step 5: Map Your Domain
+
+If using a real domain:
+
+Go to your domain registrar (like GoDaddy, Namecheap, etc.).
+
+Add an A record pointing to your server’s public IP address.
+Example:
+
+Name: @
+Type: A
+Value: <your_server_IP>
+TTL: 3600
+
+
+If using a test domain locally:
+
+sudo nano /etc/hosts
+
+
+Add line:
+
+127.0.0.1   yourdomain.com
+
+🔐 Step 6: Install Free SSL (Let's Encrypt)
+
+Install Certbot:
+
+sudo apt install certbot python3-certbot-apache -y
+
+
+Run:
+
+sudo certbot --apache -d yourdomain.com -d www.yourdomain.com
+
+
+It will automatically configure HTTPS and redirect HTTP → HTTPS.
+
+🧩 Step 7: Complete WordPress Installation
+
+Now open your browser:
+
+https://yourdomain.com
+
+
+Then follow on-screen setup:
+
+Site title
+
+Username
+
+Password
+
+Database name: wordpress
+
+Database user: wpuser
+
+Password: StrongPassword123!
+
+Host: localhost
+
+🧼 Step 8: Verify & Harden
+
+Check if all is running:
+
+sudo systemctl status apache2
+sudo systemctl status mysql
