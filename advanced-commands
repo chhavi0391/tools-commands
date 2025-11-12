@@ -66,6 +66,18 @@ du -ah                  ( Employing the '-a' flag along with '-h' displays the d
 du -ah --exclude="*.txt" /home/tecmint      ( The following command calculates and displays the disk usage of all files and directories, excluding files that match the given pattern.)
 du -ha --time /home/tecmint                 ( How to Find Directory Usage By Modification Time)
 
+
+            ( Rename Command )
+
+rename 's/\.html$/\.php/' *.html          ( Now use the rename command to change the file extensions from .html to .php.)
+rename -n 's/\.html$/\.php/' *.html       ( which will show you exactly what changes would take place, but the changes are not executed for real.)
+rename -v 's/\.html$/\.php/' *.html       ( which will print the complete details of all the changes made by the rename command.)
+rename 'y/a-z/A-Z/' *.html                (  I want to convert all the following files from lowercase to uppercase.)
+rename 's/\b(\w)/\U$1/g' *.html           ( To capitalize only the first letter of each filename use the following command.)
+rename 's/\s+/_/g' *.html                 ( To replace all occurrences of whitespace (spaces) with underscores )
+rename -f 's/a/b/' *.html                 ( If you would like to forcefully overwrite existing files, use the “-f”)
+
+
             ( Uniq Command )
 
 uniq linux-distributions.txt        ( Remove Duplicate Lines from a Text File )
@@ -75,7 +87,7 @@ uniq -d linux-distributions.txt     ( Print Only Duplicate Lines from a File )
 uniq -u linux-distributions.txt     ( Print Only Unique Lines from a File )
 
 
-              ( Sed Command & AWK Command )
+            ( Sed Command & AWK Command )
 
 sed '4 i #This is the extra line' sedtest.txt    ( sed: Prepend and Append Lines )
 sed '4 i #This is the extra line' sedtest.txt > newsedtest.txt  ( create  new file & apend data into new file )
