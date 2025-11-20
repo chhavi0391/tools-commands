@@ -1,0 +1,139 @@
+1) Install Apache & make it listen on port 8080
+# update & install apache
+sudo apt update
+sudo apt install apache2 -y
+
+# stop apache for safe config changes
+sudo systemctl stop apache2
+
+# change Apache to listen on 8080
+sudo sed -i 's/^Listen 80/Listen 8080/' /etc/apache2/ports.conf
+
+# update default site to use :8080
+sudo sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf
+
+# (optional) set ServerName in apache config so logs/errors refer correctly
+sudo bash -c 'cat >/etc/apache2/sites-available/000-default.conf <<EOF
+<VirtualHost *:8080>
+    ServerName anjatxt.cloudsmartz.com
+    DocumentRoot /var/www/anjatxt
+    <Directory /var/www/anjatxt>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog \${APACHE_LOG_DIR}/anjatxt-error.log
+    CustomLog \${APACHE_LOG_DIR}/anjatxt-access.log combined
+</VirtualHost>
+EOF'
+
+# create the document root and a test index page
+sudo mkdir -p /var/www/anjatxt
+echo "<html><body><h1>It works — served by Apache on 8080</h1></body></html>" | sudo tee /var/www/anjatxt/index.html
+
+# enable site (000-default already active, but ensure proper ownership)
+sudo chown -R www-data:www-data /var/www/anjatxt
+sudo systemctl start apache2
+sudo systemctl enable apache2
+
+
+Verify Apache is listening on 8080:
+
+sudo ss -tulnp | grep 8080
+# or
+sudo lsof -i :8080
+
+2) Install Nginx
+sudo apt install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+3) Configure Nginx reverse-proxy for anjatxt.cloudsmartz.com
+
+Create an Nginx site file:
+
+sudo bash -c 'cat >/etc/nginx/sites-available/anjatxt.conf <<EOF
+server {
+    listen 80;
+    server_name anjatxt.cloudsmartz.com;
+
+    # Proxy all requests to Apache on localhost:8080
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Connection "";
+    }
+
+    # Optional: increase buffer sizes for large headers/uploads
+    client_max_body_size 100M;
+    large_client_header_buffers 4 32k;
+}
+EOF'
+
+# enable the site and disable default
+sudo ln -s /etc/nginx/sites-available/anjatxt.conf /etc/nginx/sites-enabled/
+sudo rm -f /etc/nginx/sites-enabled/default
+
+# test and reload nginx
+sudo nginx -t
+sudo systemctl reload nginx
+
+
+At this point, visiting http://anjatxt.cloudsmartz.com should show the Apache test page (served via Nginx). If it doesn't, re-check DNS and ss -tulnp for listening ports.
+
+4) Open firewall ports (UFW) if UFW is in use
+# allow SSH (if not already), HTTP and HTTPS
+sudo ufw allow OpenSSH
+sudo ufw allow 'Nginx Full'   # opens 80 and 443
+sudo ufw enable              # if not already enabled - be careful with remote servers
+sudo ufw status
+
+
+If you don't use UFW, ensure cloud provider security group / network firewall allows TCP 80 and 443.
+
+5) Install Certbot and get TLS certificate (Let’s Encrypt)
+sudo apt install certbot python3-certbot-nginx -y
+
+# Obtain certificate and let certbot automatically update nginx config for HTTPS
+sudo certbot --nginx -d anjatxt.cloudsmartz.com --agree-tos --redirect --non-interactive -m youremail@example.com
+
+
+Important: replace youremail@example.com with your email address (used for expiration notices). --redirect will set up HTTP→HTTPS redirect automatically.
+
+If certbot --nginx fails for any reason (e.g., unusual nginx config), use webroot:
+
+# create webroot path and ensure permissions
+sudo mkdir -p /var/www/anjatxt/.well-known
+sudo chown -R www-data:www-data /var/www/anjatxt
+
+sudo certbot certonly --webroot -w /var/www/anjatxt -d anjatxt.cloudsmartz.com -m youremail@example.com --agree-tos --non-interactive
+
+
+Then manually update the /etc/nginx/sites-available/anjatxt.conf with the SSL server block Certbot shows or follow the files in /etc/letsencrypt/live/anjatxt.cloudsmartz.com/ to configure ssl_certificate and ssl_certificate_key.
+
+6) Confirm automatic renewal (Certbot systemd timer is installed on modern Ubuntu)
+
+Check renewal status:
+
+sudo systemctl status certbot.timer
+# test a dry-run renewal
+sudo certbot renew --dry-run
+
+7) Final verification steps
+
+Visit: https://anjatxt.cloudsmartz.com — should load the site with a valid certificate and show the Apache page.
+
+Verify certificate:
+
+sudo openssl s_client -connect anjatxt.cloudsmartz.com:443 -servername anjatxt.cloudsmartz.com </dev/null 2>/dev/null | openssl x509 -noout -dates -subject -issuer
+
+
+Check Nginx and Apache logs for issues:
+
+sudo tail -n 100 /var/log/nginx/error.log
+sudo tail -n 200 /var/log/apache2/anjatxt-error.log
