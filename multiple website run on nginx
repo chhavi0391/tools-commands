@@ -1,0 +1,25 @@
+server{
+        listen 80;
+        server_name jen.anjatxt.cloudsmartz.com;
+
+        root /var/www/jentxt/;
+        index index.html;
+
+        access_log /var/log/nginx/jentxt.com.access.log;
+        error_log /var/log/nginx/jentxtcom.error.log;
+}
+        #anjatxt.cloudsmartz.com
+        server{
+                listen 8080;
+                server_name jen.anjatxt.cloudsmartz.com;
+
+                root /var/www/anjatxt/;
+                index index.html;
+
+                access_log /var/log/nginx/anjatxt.cloud.com.access.log;
+                error_log /var/log/nginx/anjatxt.cloud.com.error.log;
+}
+~                                                                                          
+~                                                                                          
+~                                                                                          
+~           
