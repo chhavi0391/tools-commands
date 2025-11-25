@@ -61,3 +61,5 @@ ssh -p 2222 username@your_server_ip
 
 
 If that works — great! Now you can safely close the old session.
+
+EOF>
