@@ -22,3 +22,6 @@ Allow IP                	csf -a <IP>
 Deny IP	                  csf -d <IP>
 Remove IP	                  csf -r
 Test mode                 (default after install)	TESTING = "1" → change to 0 in csf.conf for full protection
+
+
+EOF>>>>>
