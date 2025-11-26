@@ -137,3 +137,35 @@ Check Nginx and Apache logs for issues:
 
 sudo tail -n 100 /var/log/nginx/error.log
 sudo tail -n 200 /var/log/apache2/anjatxt-error.log
+
+
+
+
+
+
+
+
+###  Block default port of jenkins 8080 from outside && use nginx for reverse proxy
+
+Perfect — we’ll restrict Jenkins so it only listens locally and is not accessible on port 8080 from outside.
+Only Nginx (running locally) will be able to reach it. ✔
+
+🔒 Hide Jenkins: Bind Jenkins ONLY to 127.0.0.1
+1️⃣ Edit Jenkins Systemd Service Override
+
+Open the Jenkins service file:
+
+sudo systemctl edit jenkins
+
+
+This opens a blank override file. Paste this:
+
+[Service]
+Environment="JENKINS_LISTEN_ADDRESS=127.0.0.1"
+
+
+Save & exit (CTRL+S, CTRL+X).
+
+2️⃣ Reload Daemon and Restart Jenkins
+sudo systemctl daemon-reload
+sudo systemctl restart jenkins
