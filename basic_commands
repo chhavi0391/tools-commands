@@ -1,0 +1,85 @@
+(Basic Commands for beginner's)
+
+ls Command – List Files and Directories in Linux
+cd Command – Switch Between Directories in Linux
+pwd Command – Check Current Working Directory in Linux
+dir Command – List Contents of a Directory in Linux
+mkdir Command – Create New Directories in Linux
+rmdir Command – Delete Directories in Linux
+mv Command – Rename or Move Files and Directories in Linux
+cp Command – Copy Files and Directories in Linux
+touch Command – Create New Files in Linux
+find Command – Find Files and Directories in Linux
+cat Command – List Contents of Files in Linux
+df Command – Check Linux File System Disk Space Usage
+du Command – Check Disk Usage of Files and Directories
+tar Command – Create, Extract, and List Archive Files in Linux
+grep Command – Find Patterns or Strings in Text Files
+ln Command – Create Hard and Symbolic Links in Linux
+alias Command – Create Alias (Shortcuts) in Linux
+echo Command – How to Print Line of Text in Linux
+tail Command – Print Last 10 Lines of File in Linux
+top Command – List Running Processes in Linux
+ps Command – List Running Processes with PIDs in Linux
+kill Command – Kill Running Processes with PIDs in Linux
+uniq Command – Remove Duplicate Lines in Linux
+
+( Permissions )
+
+
+
+(User Create, Delete)
+
+
+adduser ravi ( recommended this command for user creation because it's created by default home directory for user )
+useradd ravi ( create a user )
+passwd ravi  ( create a user's password )
+userdel ravi ( delete a user )
+userdel -r ravi ( delete user with home directory of user ) 
+useradd -d ravi ( use for separate home directory for user )
+useradd -u ravi ( create a user with define UID )
+useradd -aG admin,developers ravi ( add a user to multiple groups )
+useradd -M ravi ( create a user withour home directory )
+useradd -e 2025-10-28 ravi ( create a user with expiry date )
+useradd -e 2025-10-28 -f 45 ravi ( create a user with password expiry date .. password expire in 45 days )
+useradd -s /sbin/nologin ravi ( create a user without login )
+
+( User modification )
+
+
+usermod -d /var/www/ravi ravi ( change by default home directory to customize directory )
+usermod -e 2025-10-28 ravi ( set expiry date for user )
+chage -l ravi ( check for user's information )
+usermod -g babin ravi ( use for change primary group of user )
+usermod -aG babin ravi ( add an existing user to other group )
+usermod -l ravi ravi_admin ( change a existing username to new username )
+usermod -L ravi ( To lock any user )
+usermod -U ravi ( To Unlock the user )
+usermod -d /var/pinky/ -m pinky ( move the home directory to new location )
+
+( Monitoring of User's activities )
+
+( acct for ubuntu 0r psacct for redhart )
+
+(    Installation
+
+apt install acct -y 
+sudo systemctl start acct
+sudo systemctl enable acct
+sudo systemctl status acct  
+                                )
+
+ac                    ( Display Statistics of Users Connect Time )
+ac -d                 ( Display Statistics of Linux Users Day-wise )
+ac -p                 ( Display Total Login Time of All Linux Users )
+ac clzadmin           ( Display Linux User Login Time )
+sa                    (  Print All Linux Commands Executed by Users )
+sa -u                 ( Print Linux User Information )
+sa -m                 ( Print Number of Linux Processes )
+sa -c                 ( Print and Sort Usage by Percentage )
+lastcomm clzadmin     ( List Last Executed Commands of User )
+
+
+
+
+
