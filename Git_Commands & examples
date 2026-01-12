@@ -1,0 +1,236 @@
+🔹 1. Git Configuration (One-time setup)
+git config --global user.name "Ravinder Singh"
+
+
+➡️ Sets your Git username (shown in commits)
+
+git config --global user.email "ravinder@example.com"
+
+
+➡️ Sets your email for commits
+
+git config --list
+
+
+➡️ Shows all Git configurations
+
+🔹 2. Repository Setup
+git init
+
+
+➡️ Initializes a new Git repository
+
+git clone https://github.com/user/repo.git
+
+
+➡️ Downloads an existing repository
+
+🔹 3. Checking Repository Status
+git status
+
+
+➡️ Shows file status (modified, staged, untracked)
+
+git log
+
+
+➡️ Shows commit history
+
+git log --oneline
+
+
+➡️ Shows compact commit history
+
+🔹 4. Working with Files
+git add file.txt
+
+
+➡️ Adds file to staging area
+
+git add .
+
+
+➡️ Adds all changes to staging
+
+git commit -m "Initial commit"
+
+
+➡️ Saves staged changes with message
+
+git commit -am "Quick commit"
+
+
+➡️ Add & commit tracked files (skips untracked files)
+
+🔹 5. Branching
+git branch
+
+
+➡️ Lists branches
+
+git branch dev
+
+
+➡️ Creates new branch
+
+git checkout dev
+
+
+➡️ Switches to branch
+
+git checkout -b feature-login
+
+
+➡️ Create & switch to new branch
+
+git branch -d dev
+
+
+➡️ Deletes branch
+
+🔹 6. Merging & Rebase
+git merge dev
+
+
+➡️ Merges dev branch into current branch
+
+git rebase main
+
+
+➡️ Re-applies commits on top of main
+
+🔹 7. Remote Repositories (GitHub/GitLab)
+git remote -v
+
+
+➡️ Shows remote repositories
+
+git remote add origin https://github.com/user/repo.git
+
+
+➡️ Adds remote repo
+
+git push origin main
+
+
+➡️ Pushes commits to remote branch
+
+git pull origin main
+
+
+➡️ Fetch + merge remote changes
+
+git fetch
+
+
+➡️ Downloads changes without merging
+
+🔹 8. Undo & Fix Mistakes
+git restore file.txt
+
+
+➡️ Discards local changes
+
+git restore --staged file.txt
+
+
+➡️ Removes file from staging
+
+git reset --soft HEAD~1
+
+
+➡️ Undo last commit (keep changes)
+
+git reset --hard HEAD~1
+
+
+➡️ Completely remove last commit ⚠️
+
+git revert <commit-id>
+
+
+➡️ Safely undo a commit (recommended)
+
+🔹 9. Stash (Temporary Save)
+git stash
+
+
+➡️ Saves uncommitted work temporarily
+
+git stash list
+
+
+➡️ Shows stashed changes
+
+git stash pop
+
+
+➡️ Restores latest stash
+
+🔹 10. Tags (Releases)
+git tag v1.0
+
+
+➡️ Creates a tag
+
+git tag
+
+
+➡️ Lists tags
+
+git push origin v1.0
+
+
+➡️ Push tag to remote
+
+🔹 11. Advanced & DevOps Useful Commands
+git diff
+
+
+➡️ Shows changes not staged
+
+git diff --staged
+
+
+➡️ Shows staged changes
+
+git blame file.txt
+
+
+➡️ Shows who changed each line
+
+git show <commit-id>
+
+
+➡️ Shows commit details
+
+git cherry-pick <commit-id>
+
+
+➡️ Apply specific commit
+
+🔹 12. Common Git Workflow (Real Life)
+git pull origin main
+git checkout -b feature-x
+git add .
+git commit -m "Added feature X"
+git push origin feature-x
+
+🔹 13. Git in CI/CD (Jenkins)
+git clone https://github.com/org/app.git
+
+
+➡️ Fetch code in Jenkins pipeline
+
+git checkout ${BRANCH_NAME}
+
+
+➡️ Build specific branch
+
+📌 Summary
+
+Working directory → git add → Staging → git commit → Repository
+
+Always pull before pushing
+
+Use revert instead of reset on shared branches
