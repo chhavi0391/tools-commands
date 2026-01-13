@@ -1,0 +1,131 @@
+📌 Cluster & Context
+kubectl version
+kubectl cluster-info
+kubectl config get-contexts
+kubectl config use-context <context-name>
+
+📌 Basic Resource Management
+kubectl get nodes
+kubectl get pods
+kubectl get pods -o wide
+kubectl get services
+kubectl get all
+
+
+Specific namespace:
+
+kubectl get pods -n kube-system
+
+
+All namespaces:
+
+kubectl get pods -A
+
+📌 Create & Delete
+kubectl create -f app.yaml
+kubectl apply -f app.yaml
+kubectl delete -f app.yaml
+kubectl delete pod <pod-name>
+
+📌 Describe & Logs
+kubectl describe pod <pod-name>
+kubectl describe node <node-name>
+kubectl logs <pod-name>
+kubectl logs <pod-name> -c <container-name>
+
+📌 Exec & Port Forward
+kubectl exec -it <pod-name> -- /bin/bash
+kubectl port-forward pod/<pod-name> 8080:80
+
+⚙️ Intermediate kubectl Commands
+📌 Namespaces
+kubectl get ns
+kubectl create ns dev
+kubectl config set-context --current --namespace=dev
+
+📌 Deployment Management
+kubectl get deploy
+kubectl scale deploy <deploy-name> --replicas=5
+kubectl rollout status deploy <deploy-name>
+kubectl rollout history deploy <deploy-name>
+kubectl rollout undo deploy <deploy-name>
+
+📌 Service & Networking
+kubectl get svc
+kubectl describe svc <service-name>
+kubectl get endpoints
+
+📌 ConfigMaps & Secrets
+kubectl get configmap
+kubectl create configmap app-config --from-literal=env=prod
+
+kubectl get secrets
+kubectl create secret generic db-secret \
+--from-literal=username=admin \
+--from-literal=password=pass123
+
+📌 Resource Usage (Metrics Server required)
+kubectl top nodes
+kubectl top pods
+
+🚀 Advanced kubectl Commands (Production Level)
+📌 Debugging & Troubleshooting
+kubectl get events --sort-by=.metadata.creationTimestamp
+kubectl logs <pod-name> --previous
+kubectl describe pod <pod-name> | grep -i error
+
+
+Ephemeral debug container:
+
+kubectl debug pod/<pod-name> -it --image=busybox
+
+📌 JSON & YAML Output
+kubectl get pod <pod-name> -o yaml
+kubectl get pod <pod-name> -o json
+
+
+Using JSONPath:
+
+kubectl get pods -o jsonpath='{.items[*].metadata.name}'
+
+📌 Label & Annotation Management
+kubectl label pod <pod-name> app=frontend
+kubectl annotate pod <pod-name> owner=devops
+
+📌 RBAC & Security
+kubectl get sa
+kubectl get roles
+kubectl get rolebindings
+kubectl auth can-i create pods
+
+📌 Node Management
+kubectl cordon <node-name>
+kubectl drain <node-name>
+kubectl uncordon <node-name>
+
+📌 Apply & Diff
+kubectl diff -f app.yaml
+kubectl apply -f app.yaml --record
+
+📌 API & Low-Level Commands
+kubectl api-resources
+kubectl api-versions
+kubectl proxy
+
+🧠 Pro Tips (Very Important)
+
+✔ Dry run before applying:
+
+kubectl apply -f app.yaml --dry-run=client
+
+
+✔ Explain any Kubernetes object:
+
+kubectl explain pod
+kubectl explain deployment.spec
+
+
+✔ Aliases (Highly recommended):
+
+alias k=kubectl
+alias kgp='kubectl get pods'
