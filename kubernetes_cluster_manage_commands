@@ -1,0 +1,125 @@
+1.####### Common options and flags ##############
+Common options in kubectl include flags that control output, namespace, resource selection, and execution behavior. These options modify how commands operate and are often used across multiple kubectl commands.
+
+
+
+alias – Set an alias for kubectl.
+
+alias k=kubectl
+echo 'alias k=kubectl' >>~/.bashrc
+-o=json – Output format in JSON.
+
+kubectl get pods -o=json
+-o=yaml – Output format in YAML.
+
+kubectl get pods -o=yaml
+-o=wide – Output in the plain-text format with any additional information, and for pods, the node name is included.
+
+kubectl get pods -o=wide
+-n – Alias for namespace.
+
+kubectl get pods -n=<namespace_name>
+-f – Filename, directory, or URL to files to use to create a resource.
+
+kubectl create -f ./<file name>
+-l – Filter using a specified label.
+
+kubectl logs -l name=<label name>
+-h – Help for kubectl.
+
+kubectl -h
+--watch – Stream resource changes in real time.
+
+kubectl get deployment my-deploy --watch
+--grace-period – Set termination grace period in seconds.
+
+kubectl delete pod my-pod --grace-period=10
+--force – Force actions like deletion.
+
+kubectl delete pod my-pod --grace-period=0 --force
+
+
+2. ######   Configuration files commands  #########
+
+
+kubectl create -f <configuration file>  – Create objects.
+
+kubectl create -f <configuration file directory> – Create objects in all manifest files in a directory.
+
+kubectl create -f <‘url’> – Create objects from a URL.
+
+kubectl get -f <configuration file> – Retrieve the status of the resources.
+
+kubectl diff -f <configuration file> – Show differences between the live cluster state and the config file.
+
+kubectl delete -f <configuration file> – Delete an object.
+
+
+3. ########## Cluster management and context commands  ############
+
+
+kubectl cluster-info – Display endpoint information about the master and services in the cluster.
+
+kubectl version – Display the Kubernetes version running on the client and server.
+
+kubectl config view – Get the cluster configuration.
+
+kubectl config view -o jsonpath='{.users[*].name}' – Get a list of users.
+
+kubectl config current-context – Display the current context.
+
+kubectl config get-contexts – Display a list of contexts.
+
+kubectl config set-context <name> – Update or create a context entry in kubeconfig file, defining cluster access settings like the cluster, namespace, and user.
+
+kubectl config use-context <cluster name> – Set the default context.
+
+kubectl api-resources – List the available API resources.
+
+kubectl api-versions – List the available API versions.
+
+
+4. ############## Daemonsets commands #############
+
+
+kubectl apply -f <daemonset_name> – Create a DaemonSet.
+
+kubectl get daemonset – List one or more Daemonsets.
+
+kubectl get daemonsets --all-namespaces – List DaemonSets across all namespaces.
+
+kubectl get daemonset <daemonset_name> -o yaml – YAML output of a DaemonSet (for backup or inspection)
+
+kubectl edit daemonset <daemonset_name> – Edit and update the definition of one or more Daemonsets.
+
+kubectl delete daemonset <daemonset_name> – Delete a Daemonset.
+
+kubectl rollout daemonset – Manage the rollout of a Daemonset.
+
+kubectl describe ds <daemonset_name> -n <namespace_name> – Display the detailed state of Daemonsets within a namespace.
+
+
+5. ########## Deployment commands #############
+
+
+
+kubectl get deployment – List one or more Deployments.
+
+kubectl describe deployment <deployment_name> – Display the detailed state of one or more Deployments.
+
+kubectl edit deployment <deployment_name> – Edit and update the definition of one or more Deployments on the server.
+
+kubectl create deployment <deployment_name> – Create a new Deployment.
+
+kubectl delete deployment <deployment_name> – Delete Deployments.
+
+kubectl rollout status deployment <deployment_name> – See the rollout status of a Deployment.
+
+kubectl set image deployment/<deployment name> <container name>=image:<new image version> – Perform a rolling update (K8S default), set the image of the container to a new version for a particular Deployment.
+
+kubectl rollout undo deployment/<deployment name> – Roll back a previous Deployment.
+
+kubectl replace --force -f <configuration file> – Perform a replace Deployment: Force replace, delete, and then re-create the resource.
+
+kubectl scale deployment <deployment name> --replicas=<n> – Manually scale the number of pod replicas in a Deployment.
+
