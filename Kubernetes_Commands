@@ -35,6 +35,7 @@ kubectl logs <pod-name> -c <container-name>
 
 📌 Exec & Port Forward
 kubectl exec -it <pod-name> -- /bin/bash
+kubectl exec -it ms-java-policy-management-59fc75ffc-s668j -n insure-qa -- bash
 kubectl port-forward pod/<pod-name> 8080:80
 
 ⚙️ Intermediate kubectl Commands
