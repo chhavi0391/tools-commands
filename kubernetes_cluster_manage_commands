@@ -79,7 +79,7 @@ kubectl api-resources – List the available API resources.
 kubectl api-versions – List the available API versions.
 
 
-export KUBECONFIG=~/Downloads/insure-test-master-kubeconfig
+export KUBECONFIG=~/Downloads/insure-test-master-kubeconfig  
 
 4. ############## Daemonsets commands #############
 
