@@ -1,0 +1,1 @@
+sudo certbot -d chhavi.online -d "*.chhavi.online" --manual --preferred-challenges dns certonly [to generate the certs manually]
