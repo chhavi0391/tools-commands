@@ -2,7 +2,7 @@ kubectl cluster-info
 kubectl get nodes
 kubectl get pods -ns 
 kubectl logs <pod name>
-kubectl logs -f <pod name>   ----live logs*
+kubectl logs -f <pod name>   [----live logs*]
 kubectl exec -it multi-container-pod -c nginx -- /bin/bash  [ here multi-conatine-pod is pod name and nginx is the container_name ]
 kubectl exec -it multi-container-pod -c sidecar -- sh
 kubectl logs multi-container-pod -c nginx  ----view logs per container
@@ -29,16 +29,6 @@ export KUBECONFIG=~/Downloads/chhavi-kubeconfig\ 1:~/Downloads/insure-test-maste
 kubectl config view --merge --flatten > ~/.kube/config
 
 unset KUBECONFIG
-
-chhavi.sharma@CS-CHHASHAR-LT MINGW64 ~/Downloads
-$ kubectl config get-contexts
-CURRENT   NAME                 CLUSTER      AUTHINFO   NAMESPACE
-*         insure-master        kubernetes   chhavi
-          insure-test-master   kubernetes   chhavi
-
-chhavi.sharma@CS-CHHASHAR-LT MINGW64 ~/Downloads
-$
+kubectl get ingress -A   [this command shows the hosts for which the microservice is running on]
 
 
-
-the insure-master has dev and qa env and insure-test-master has only test env
