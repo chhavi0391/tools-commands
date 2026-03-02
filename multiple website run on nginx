@@ -23,3 +23,8 @@ server{
 ~                                                                                          
 ~                                                                                          
 ~           
+
+
+
+how to enable a site in nginx:
+ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled/
